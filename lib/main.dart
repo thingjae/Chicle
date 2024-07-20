@@ -1,6 +1,9 @@
-import 'package:chicle/screen/community_ask.dart';
-import 'package:flutter/material.dart';
 import 'package:chicle/screen/community_screen.dart';
+import 'package:chicle/screen/home_screen.dart';
+import 'package:chicle/screen/profile_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:chicle/providers/in_memory_database.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,12 +12,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fashion Community',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => InMemoryDatabase(),
+      child: MaterialApp(
+        title: 'Fashion Community',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MainScreen(),
       ),
-      home: MainScreen(),
     );
   }
 }
@@ -28,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    CommunityScreen(boardType: 'Free Board'), // 자유게시판
-    CommunityAsk(boardType: 'Question Board'), // 질문게시판
+    CommunityScreen(boardType: 'Free Board'),
+    CommunityScreen(boardType: 'Question Board'),
     ProfileScreen(),
   ];
 
@@ -46,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
         title: Text('Fashion Community'),
       ),
       drawer: FractionallySizedBox(
-        widthFactor: 0.65,
+        widthFactor: 0.7,
         child: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -110,30 +116,6 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Home Screen',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Profile Screen',
-        style: TextStyle(fontSize: 24),
-      ),
     );
   }
 }
