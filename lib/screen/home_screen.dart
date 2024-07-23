@@ -47,8 +47,8 @@ class HomeScreen extends StatelessWidget {
           final post = posts[index];
           return Container(
             width: 200, // 각 카드의 너비 설정
+            margin: EdgeInsets.only(right: 8.0), // 카드 사이의 간격 조정
             child: Card(
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class InMemoryDatabase extends ChangeNotifier {
+  bool isLoggedIn = false;
+  String? userProfileImageUrl;
+  String? authenticationLevel;
   List<Map<String, String>> freeBoardPosts = [
     {
       'title': 'First Free Post',
@@ -42,6 +45,35 @@ class InMemoryDatabase extends ChangeNotifier {
       'imageUrl': 'https://via.placeholder.com/150'
     },
   ];
+
+  List<Map<String, String>> myPosts = [
+    {
+      'title': 'My First Post',
+      'content': 'This is a preview of my first post content.',
+    },
+  ];
+
+  List<Map<String, String>> myComments = [
+    {
+      'comment': 'This is my first comment.',
+    },
+  ];
+
+  void logIn() {
+    isLoggedIn = true;
+    userProfileImageUrl = 'https://via.placeholder.com/150'; // Google 로그인 후 실제 URL 사용
+    authenticationLevel = 'Basic';
+    notifyListeners();
+  }
+
+  void logOut() {
+    isLoggedIn = false;
+    userProfileImageUrl = null;
+    authenticationLevel = null;
+    myPosts = [];
+    myComments = [];
+    notifyListeners();
+  }
 
   void addPost(String boardType, Map<String, String> post) {
     if (boardType == 'Free Board') {

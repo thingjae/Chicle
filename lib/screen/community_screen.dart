@@ -96,7 +96,7 @@ class NewPostScreen extends StatelessWidget {
                   'title': titleController.text,
                   'author': authorController.text,
                   'content': contentController.text,
-                  'imageUrl': 'https://via.placeholder.com/150',
+                  'imageUrl': 'https://via.placeholder.com/150', // 기본 이미지 URL
                 };
                 db.addPost(boardType, post);
                 Navigator.pop(context);
