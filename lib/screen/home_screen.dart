@@ -15,9 +15,10 @@ class HomeScreen extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         children: [
           _buildSectionTitle(context, 'Free Board'),
-          _buildPostList(db.freeBoardPosts),
+          _buildHorizontalPostList(db.freeBoardPosts),
+          SizedBox(height: 16),
           _buildSectionTitle(context, 'Question Board'),
-          _buildPostList(db.questionBoardPosts),
+          _buildHorizontalPostList(db.questionBoardPosts),
         ],
       ),
     );
@@ -36,52 +37,59 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPostList(List<Map<String, String>> posts) {
-    return Column(
-      children: posts.map((post) => _buildPostCard(post)).toList(),
-    );
-  }
-
-  Widget _buildPostCard(Map<String, String> post) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            post['imageUrl']!,
-            height: 150,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post['title']!,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+  Widget _buildHorizontalPostList(List<Map<String, String>> posts) {
+    return Container(
+      height: 250, // 높이를 고정하여 가로 스크롤 가능하게 설정
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          final post = posts[index];
+          return Container(
+            width: 200, // 각 카드의 너비 설정
+            child: Card(
+              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(
+                    post['imageUrl']!,
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                ),
-                SizedBox(height: 4.0),
-                Text(
-                  post['content']!,
-                  style: TextStyle(fontSize: 14),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 4.0),
-                Text(
-                  'by ${post['author']}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          post['title']!,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 4.0),
+                        Text(
+                          post['content']!,
+                          style: TextStyle(fontSize: 14),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 4.0),
+                        Text(
+                          'by ${post['author']}',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
