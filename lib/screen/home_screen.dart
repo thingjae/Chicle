@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalPostList(List<Map<String, String>> posts) {
+ /**/ Widget _buildHorizontalPostList(List<Map<String, String>> posts) {
     return Container(
       height: 250, // 높이를 고정하여 가로 스크롤 가능하게 설정
       child: ListView.builder(
